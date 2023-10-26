@@ -1,0 +1,56 @@
+plugins {
+    id 'com.android.library'//1、修改为library，而非module
+    id 'org.jetbrains.kotlin.android'
+    id 'maven-publish' //2、maven打包插件
+}
+group = "com.gitee.JakiZ" //3、gitee仓库根路径( https:// [[  gitee.com/JakiZ  ]] /jitpacktest.git)
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                groupId = 'com.example.testlib' //4、打包的包名不同
+                artifactId = 'aId'//5、项目的通用名称，不同的库不一样
+                version = '1.0.1'//6、版本好像不起作用，gradle依赖是按照gitee上tag标签确定的，所以要管理好这个版本和tag的对应关系
+            }
+        }
+    }
+}
+android {
+    namespace 'com.example.testlib'
+    compileSdk 33
+    defaultConfig {
+//        applicationId "com.example.testlib" //6、注释掉，此时项目不是module，不需要applicationId
+        minSdk 23
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
