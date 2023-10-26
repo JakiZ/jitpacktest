@@ -3,7 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'maven-publish' //2、maven打包插件
 }
-group = "com.gitee.JakiZ" //3、gitee仓库根路径( https:// [[  gitee.com/JakiZ  ]] /jitpacktest.git)
+group = "com.github.JakiZ" //3、gitee仓库根路径( https:// [[  gitee.com/JakiZ  ]] /jitpacktest.git)
 
 afterEvaluate {
     publishing {
